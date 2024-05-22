@@ -1,0 +1,127 @@
+
+1. Write a Selenium Java script to automate the following scenario:
+Write the code to launch ChromeDriver, maximize the window, and navigate to the
+https://jqueryui.com/datepicker/ URL
+ Switch to the iframe that contains the datepicker
+• Write the code to select the next month from the datepicker
+• Write the code to select the date "22" from the datepicker
+Close the browser window and quit the WebDriver instance print the selected date on console as output
+
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class DatePicker {
+
+	public static void main(String[] args) {
+		
+		EdgeDriver driver = new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.get("https://jqueryui.com/datepicker/");
+				
+		driver.switchTo().frame(0);
+		
+		driver.findElement(By.id("datepicker")).click();
+		
+		driver.findElement(By.xpath("/html/body/div/div/a[2]")).click();
+		
+		WebElement desiredDate = driver.findElement(By.xpath("//a[text()='22']"));
+		
+        desiredDate.click();
+        
+        WebElement date = driver.findElement(By.id("datepicker"));
+        
+        String selectedDate = date.getAttribute("value");
+        
+        System.out.println("Selected Date: "+ selectedDate);
+      
+        driver.quit();
+		
+	}
+
+}
+
+
+Output:
+
+Selected Date: 06/22/2024
+
+
+
+
+2. To Automate Signup and Login process for https://www.guvi.in/
+Steps:
+• Launch the website https://www.guvi.in/ using Selenium WebDriver.
+• Locate the Signup button on the top right corner of the page and click on it. • Fill in the signup form with required details like name, email, password, etc. • Click on the "Signup" button to submit the form.
+Wait for the page to load and verify that the user is registered successfully. • Locate the Login button on the top right corner of the page and click on it. • Fill in the login form with the email and password used during registration. • Click on the "Login" button to submit the form.
+Wait for the page to load and verify that the user is logged in successfully.
+Close the browser.
+Hint: You can use the WebDriver's findElement() and sendKeys() methods to locate and fill in the form fields, and use the click() method to click on buttons. You can also use the getTitle() method to verify the page title after registration and login.
+
+import java.time.Duration;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+public class guviSignup {
+	public static void main(String[] args) {
+		
+		EdgeDriver driver=new EdgeDriver();
+		
+		driver.manage().window().maximize();
+		
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+		
+		driver.get("https://www.guvi.in/");
+		
+		driver.findElement(By.xpath("//*[@id=\"accountGroup\"]/ul/li[2]/a")).click();
+		
+		driver.findElement(By.id("name")).sendKeys("Vinoth kumar");
+		
+		driver.findElement(By.id("email")).sendKeys("mr.a.Vinothkumar1@gmail.com");
+		
+		driver.findElement(By.id("password")).sendKeys("V7708564205@#");
+     
+		driver.findElement(By.id("mobileNumber")).sendKeys("7708564205");
+     
+		driver.findElement(By.id("signup-btn")).click();
+     
+		WebElement check= driver.findElement(By.id("profileDrpDwn"));
+     
+		Select Mycheck = new Select(check);
+     
+		Mycheck.selectByVisibleText("Student");
+     
+		WebElement check1=driver.findElement(By.id("degreeDrpDwn"));
+     
+		Select Mycheck1=new Select(check1);
+     
+		Mycheck1.selectByVisibleText("B.E. / B.Tech. Mechanical Engineering");
+     
+		driver.findElement(By.id("year")).sendKeys("2018");
+     
+		driver.findElement(By.id("details-btn")).click();
+    
+		WebElement one= driver.findElement(By.tagName("h1"));
+    
+		String text=one.getText();
+    
+		System.out.println(text);
+    
+		driver.quit();
+      
+	}
+}
+
+Output:
+
+Welcome to GUVI!
